@@ -125,11 +125,15 @@
 
   function update(){
     // Highlight the last block whose top has scrolled above the focus line.
-    // This reaches every block, including the last two near the page bottom.
-    var line = window.innerHeight * 0.5;
+    var line = window.innerHeight * 0.55;
     var best = targets[0];
     for (var i=0;i<targets.length;i++){
       if (targets[i].getBoundingClientRect().top <= line) best = targets[i];
+    }
+    // The last block sits too low to ever reach the focus line, so once you've
+    // actually scrolled to the bottom, light it up.
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2){
+      best = targets[targets.length - 1];
     }
     if (best && best !== current){
       if (current) current.classList.remove('active');
