@@ -9,7 +9,7 @@
     --gold:#e9b85f; --gold-bright:#f6d68a; --gold-deep:#b9802f;
     --cream:#f3e7cf; --muted:#c9b48c;
     --line:rgba(233,184,95,.22);
-    --gy:12%;
+    --gy:32%;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -18,16 +18,21 @@
     font:17px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     -webkit-text-size-adjust:100%; -webkit-font-smoothing:antialiased;
   }
-  /* Wide, soft band of gold pinned to the viewport — slides down as you scroll */
+  /* Two soft gold lamps just offscreen left & right, spilling light inward */
   .glow{
-    position:fixed; inset:-15% -10%; z-index:0; pointer-events:none;
+    position:fixed; inset:-20% -5%; z-index:0; pointer-events:none;
     background:
-      radial-gradient(150% 42% at 50% var(--gy),
-        rgba(246,214,138,.34) 0%,
-        rgba(226,172,88,.22) 24%,
-        rgba(150,100,42,.10) 44%,
-        rgba(20,13,7,0) 66%);
-    filter:blur(40px);
+      radial-gradient(60% 60% at -8% var(--gy),
+        rgba(246,214,138,.40) 0%,
+        rgba(226,172,88,.20) 30%,
+        rgba(150,100,42,.07) 50%,
+        rgba(20,13,7,0) 68%),
+      radial-gradient(60% 60% at 108% var(--gy),
+        rgba(246,214,138,.40) 0%,
+        rgba(226,172,88,.20) 30%,
+        rgba(150,100,42,.07) 50%,
+        rgba(20,13,7,0) 68%);
+    filter:blur(48px);
     will-change:background;
   }
   .page{position:relative; z-index:1}
@@ -118,8 +123,8 @@
   function place(){
     var max = Math.max(1, document.body.scrollHeight - window.innerHeight);
     var f = Math.min(1, Math.max(0, window.scrollY / max));
-    // Wide band slides from near the top of the view down toward the bottom as you scroll
-    var y = (12 + f * 76).toFixed(1) + '%';
+    // Lamps drift gently downward as you scroll (small travel)
+    var y = (32 + f * 34).toFixed(1) + '%';
     glow.style.setProperty('--gy', y);
     ticking = false;
   }
