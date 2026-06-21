@@ -20,19 +20,19 @@
   /* A warm gold glow that illuminates whichever block you're looking at,
      shimmers softly, and hands off to the next one as you scroll */
   .lit{position:relative}
+  /* Glow is bound to the block's own box, so its soft edges fall within the
+     divider lines instead of bleeding across them */
   .lit::before{
-    content:""; position:absolute; inset:-26px -16px; z-index:-1; pointer-events:none;
-    border-radius:30px;
-    background:radial-gradient(70% 100% at 50% 50%,
-      rgba(255,237,178,.46) 0%,
-      rgba(247,200,112,.26) 36%,
-      rgba(196,135,56,.11) 60%,
-      rgba(20,13,7,0) 78%);
-    opacity:0; transform:scale(.94);
-    transition:opacity .55s ease, transform .55s ease;
+    content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+    background:radial-gradient(78% 72% at 50% 50%,
+      rgba(255,237,178,.42) 0%,
+      rgba(247,200,112,.24) 40%,
+      rgba(196,135,56,.09) 64%,
+      rgba(20,13,7,0) 82%);
+    opacity:0; transition:opacity .55s ease;
   }
-  .lit.active::before{opacity:1; transform:scale(1); animation:breathe 4.5s ease-in-out infinite}
-  @keyframes breathe{0%,100%{opacity:.82; filter:saturate(1)}50%{opacity:1; filter:saturate(1.12)}}
+  .lit.active::before{opacity:1; animation:breathe 4.5s ease-in-out infinite}
+  @keyframes breathe{0%,100%{opacity:.8; filter:saturate(1)}50%{opacity:1; filter:saturate(1.12)}}
   .lit .serif,.lit .day,.lit .addr,.lit .time,.lit .ft,.lit h1{
     transition:text-shadow .55s ease;
   }
@@ -124,18 +124,13 @@
   var ticking = false;
 
   function update(){
-    var mid = window.innerHeight / 2;
-    var best = null, bestDist = Infinity;
+    // Highlight the last block whose top has scrolled above the focus line.
+    // This reaches every block, including the last two near the page bottom.
+    var line = window.innerHeight * 0.5;
+    var best = targets[0];
     for (var i=0;i<targets.length;i++){
-      var r = targets[i].getBoundingClientRect();
-      var c = r.top + r.height/2;
-      var d = Math.abs(c - mid);
-      if (d < bestDist){ bestDist = d; best = targets[i]; }
+      if (targets[i].getBoundingClientRect().top <= line) best = targets[i];
     }
-    // The first and last blocks can't reach screen-center (no scroll room),
-    // so pin them when you're at the very top or bottom of the page.
-    if (window.scrollY <= 4) best = targets[0];
-    else if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) best = targets[targets.length-1];
     if (best && best !== current){
       if (current) current.classList.remove('active');
       best.classList.add('active');
