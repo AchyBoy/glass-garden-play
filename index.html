@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Glass Garden — Riverside Community Theatre</title>
+<style>
+  :root{
+    --ink:#20271f; --cream:#f6f1e7; --paper:#fffdf8;
+    --green:#27402f; --green-deep:#1a2c20; --accent:#c9743a; --accent-d:#9c531f;
+    --muted:#6b7167; --line:rgba(32,39,31,.12);
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--cream); color:var(--ink);
+    font:17px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-text-size-adjust:100%; -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif}
+  .wrap{max-width:680px;margin:0 auto;padding:0 22px}
+  a{color:inherit}
+
+  header.bar{
+    position:sticky;top:0;z-index:20;background:rgba(246,241,231,.92);
+    backdrop-filter:saturate(150%) blur(8px);border-bottom:1px solid var(--line);
+  }
+  .bar .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
+  .bar .name{font-size:15px;font-weight:600;letter-spacing:.02em}
+  .btn{
+    display:inline-block;background:var(--accent);color:#fff;text-decoration:none;
+    font-weight:600;font-size:14px;padding:9px 16px;border-radius:999px;
+  }
+  .btn:active{background:var(--accent-d)}
+  .btn.lg{font-size:16px;padding:14px 26px}
+  .btn.ghost{background:transparent;color:var(--cream);border:1.5px solid rgba(246,241,231,.5)}
+
+  .hero{background:var(--green-deep);color:var(--cream);padding:64px 0 56px;position:relative;overflow:hidden}
+  .hero svg.leaf{position:absolute;right:-40px;top:-30px;width:280px;opacity:.16}
+  .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+  .hero h1{font-size:clamp(40px,12vw,72px);line-height:1.02;font-weight:600;letter-spacing:-.01em}
+  .hero .tag{font-size:18px;line-height:1.5;color:#dcd2bf;margin:18px 0 26px;max-width:30ch}
+  .facts{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:15px;color:#dcd2bf;margin-bottom:30px}
+  .facts span{display:inline-flex;align-items:center;gap:8px}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px}
+
+  section{padding:48px 0;border-bottom:1px solid var(--line)}
+  .kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-d);margin-bottom:14px}
+  h2{font-size:30px;font-weight:600;letter-spacing:-.01em;margin-bottom:16px}
+  p.lede{font-size:18px;color:#3a4137}
+
+  .shows{list-style:none}
+  .shows li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+    padding:16px 0;border-top:1px solid var(--line)}
+  .shows li:first-child{border-top:0}
+  .shows .d{font-weight:600;font-size:17px}
+  .shows .t{color:var(--muted);font-size:16px;white-space:nowrap}
+
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .card .lbl{font-size:13px;color:var(--muted)}
+  .card .big{font-size:30px;font-weight:600;margin-top:4px}
+  .card .sub{font-size:13px;color:var(--muted);margin-top:2px}
+
+  .credits{list-style:none}
+  .credits li{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-top:1px solid var(--line);font-size:16px}
+  .credits li:first-child{border-top:0}
+  .credits .role{color:var(--muted)}
+
+  .venue p{margin-bottom:6px}
+  footer{background:var(--green-deep);color:#bfb6a4;text-align:center;padding:40px 22px;font-size:14px}
+  footer .ft-name{color:var(--cream);font-weight:600;font-size:16px;margin-bottom:8px}
+  .note{background:#fff7ec;border:1px dashed var(--accent);color:var(--accent-d);
+    font-size:13px;text-align:center;padding:10px;border-radius:12px;margin:18px auto 0}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <span class="name serif">The Glass Garden</span>
+    <a class="btn" href="#tickets">Tickets</a>
+  </div>
+</header>
+
+<div class="hero">
+  <svg class="leaf" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M50 95C50 60 30 40 12 30 35 32 50 18 50 5c0 13 15 27 38 25C70 40 50 60 50 95z" fill="#c9743a"/>
+    <path d="M50 95V20" stroke="#1a2c20" stroke-width="2"/>
+  </svg>
+  <div class="wrap">
+    <p class="eyebrow">Riverside Community Theatre presents</p>
+    <h1 class="serif">The Glass Garden</h1>
+    <p class="tag">A new play about memory, family, and the things we leave behind.</p>
+    <div class="facts">
+      <span>March 14&ndash;23, 2026</span>
+      <span>The Riverside Playhouse</span>
+    </div>
+    <div class="cta-row">
+      <a class="btn lg" href="#tickets">Get tickets</a>
+      <a class="btn lg ghost" href="#about">Read more</a>
+    </div>
+  </div>
+</div>
+
+<section id="about" class="wrap" style="border-bottom:1px solid var(--line)">
+  <p class="kicker">About the play</p>
+  <h2 class="serif">One last spring at the old house</h2>
+  <p class="lede">When three siblings return to their childhood home, an overgrown greenhouse out back holds far more than forgotten plants. Tender, funny, and quietly devastating, <em>The Glass Garden</em> is about what a family keeps, what it argues over, and what it finally learns to let go.</p>
+</section>
+
+<section class="wrap">
+  <p class="kicker">Showtimes</p>
+  <h2 class="serif">When to come</h2>
+  <ul class="shows">
+    <li><span class="d">Fri &amp; Sat evenings</span><span class="t">7:30 pm</span></li>
+    <li><span class="d">Sunday matinées</span><span class="t">2:00 pm</span></li>
+    <li><span class="d">Opening night</span><span class="t">Mar 14, 7:30 pm</span></li>
+    <li><span class="d">Closing performance</span><span class="t">Mar 23, 7:30 pm</span></li>
+  </ul>
+  <div class="cards">
+    <div class="card">
+      <div class="lbl">Tickets</div><div class="big">$18</div>
+      <div class="sub">$12 students &amp; seniors</div>
+    </div>
+    <div class="card">
+      <div class="lbl">Run time</div><div class="big">110 min</div>
+      <div class="sub">with one intermission</div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <p class="kicker">Cast &amp; creative</p>
+  <h2 class="serif">Who made it</h2>
+  <ul class="credits">
+    <li><span class="role">Directed by</span><span>Dana Whitfield</span></li>
+    <li><span class="role">Written by</span><span>L. Marsh</span></li>
+    <li><span class="role">Starring</span><span>Eli Chen &amp; Rosa Vance</span></li>
+    <li><span class="role">Set design</span><span>The Riverside Workshop</span></li>
+  </ul>
+</section>
+
+<section id="tickets" class="wrap venue">
+  <p class="kicker">Tickets &amp; venue</p>
+  <h2 class="serif">Getting there</h2>
+  <p><strong>The Riverside Playhouse</strong></p>
+  <p>214 Mill Street &middot; free lot parking</p>
+  <p style="color:var(--muted);margin-bottom:22px">Box office opens one hour before each show. Cash and card welcome.</p>
+  <a class="btn lg" href="#">Reserve your seats</a>
+  <div class="note">Sample content — replace the play name, dates, cast, and ticket link with the real details.</div>
+</section>
+
+<footer>
+  <div class="ft-name serif">The Glass Garden</div>
+  <div>Riverside Community Theatre &middot; March 14&ndash;23, 2026</div>
+</footer>
+
+</body>
+</html>
