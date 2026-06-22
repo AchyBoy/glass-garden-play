@@ -165,7 +165,7 @@
     <p class="kicker">Showtimes</p>
     <div class="show"><div class="day"><b>Saturday</b> · June 20</div><div class="time">6:30 PM</div></div>
     <div class="show"><div class="day"><b>Sunday</b> · June 21</div><div class="time">5:00 PM</div></div>
-    <a class="mapbtn" id="cal" href="#">Add to calendar</a>
+    <a class="mapbtn" href="the-end-of-time.ics">Add to calendar</a>
   </div>
 </section>
 
@@ -227,23 +227,6 @@
     clabel.textContent='until the curtain rises';
   }
   tick(); setInterval(tick,1000);
-
-  // Add to calendar — an .ics with both performances (times in UTC; CDT is -5)
-  var ICS = [
-    'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//AECL//The End of Time//EN','CALSCALE:GREGORIAN',
-    'BEGIN:VEVENT','UID:eot-20260620@apostoliclafayette','DTSTAMP:20260601T000000Z',
-    'DTSTART:20260620T233000Z','DTEND:20260621T013000Z','SUMMARY:The End of Time',
-    'LOCATION:302 Town Center Pkwy\\, Lafayette\\, LA 70503',
-    'DESCRIPTION:The Apostolic Church of Lafayette presents The End of Time\\, written by Drake Simon.','END:VEVENT',
-    'BEGIN:VEVENT','UID:eot-20260621@apostoliclafayette','DTSTAMP:20260601T000000Z',
-    'DTSTART:20260621T220000Z','DTEND:20260622T000000Z','SUMMARY:The End of Time',
-    'LOCATION:302 Town Center Pkwy\\, Lafayette\\, LA 70503',
-    'DESCRIPTION:The Apostolic Church of Lafayette presents The End of Time\\, written by Drake Simon.','END:VEVENT',
-    'END:VCALENDAR'
-  ].join('\r\n');
-  var cal = document.getElementById('cal');
-  cal.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ICS);
-  cal.setAttribute('download','the-end-of-time.ics');
 </script>
 
 </body>
