@@ -54,7 +54,7 @@
   /* hero */
   .hero{position:relative;min-height:94vh;display:flex;flex-direction:column;
     align-items:center;justify-content:flex-end;text-align:center;overflow:hidden}
-  .hero .bg{position:absolute;inset:0;background:#10131b url('hero.jpg') center 28%/cover no-repeat;
+  .hero .bg{position:absolute;inset:0;background:#10131b url('hero.jpg') center 42%/cover no-repeat;
     transform:scale(1.05);animation:slowzoom 18s ease-out forwards}
   @keyframes slowzoom{to{transform:scale(1)}}
   .hero .scrim{position:absolute;inset:0;background:
@@ -101,6 +101,10 @@
   .credits li + li{border-top:1px solid var(--line)}
   .credits .role{color:var(--muted);text-align:left}
   .credits .who{color:var(--cream);text-align:right}
+
+  .gallery{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .gallery img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;
+    border-radius:12px;border:1px solid var(--line)}
 
   .addr{font-family:var(--serif);font-size:26px;color:var(--cream);margin-bottom:6px}
   .city{color:var(--muted);font-size:15px}
@@ -179,6 +183,16 @@
       <li><span class="role">Soloists</span><span class="who">Members of the congregation</span></li>
       <li><span class="role">Musicians</span><span class="who">Live ensemble</span></li>
     </ul>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap reveal">
+    <p class="kicker">On stage</p>
+    <div class="gallery">
+      <img src="g1.jpg" alt="Scene from The End of Time" loading="lazy">
+      <img src="g2.jpg" alt="Scene from The End of Time" loading="lazy">
+    </div>
   </div>
 </section>
 
