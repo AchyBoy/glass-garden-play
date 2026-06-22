@@ -4,6 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The End of Time — The Apostolic Church of Lafayette</title>
+<meta name="description" content="The Apostolic Church of Lafayette presents The End of Time, written by Drake Simon. June 20–21 · Lafayette, LA.">
+<meta name="theme-color" content="#0a0c11">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The End of Time">
+<meta property="og:description" content="The Apostolic Church of Lafayette presents an evening of sacred music and drama. June 20–21 · Lafayette, LA.">
+<meta property="og:image" content="https://achyboy.github.io/glass-garden-play/hero.jpg">
+<meta property="og:url" content="https://achyboy.github.io/glass-garden-play/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The End of Time">
+<meta name="twitter:description" content="The Apostolic Church of Lafayette presents an evening of sacred music and drama. June 20–21 · Lafayette, LA.">
+<meta name="twitter:image" content="https://achyboy.github.io/glass-garden-play/hero.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -83,6 +94,14 @@
   .show .day b{color:var(--gold-bright);font-weight:600}
   .show .time{font-size:15px;letter-spacing:.06em;color:var(--gold);margin-top:6px}
 
+  .lede{font-family:var(--serif);font-style:italic;font-size:22px;line-height:1.6;
+    color:#ddd3c2;max-width:34ch;margin:0 auto}
+  .credits{list-style:none;max-width:430px;margin:0 auto}
+  .credits li{display:flex;justify-content:space-between;gap:18px;padding:14px 0;font-size:16px}
+  .credits li + li{border-top:1px solid var(--line)}
+  .credits .role{color:var(--muted);text-align:left}
+  .credits .who{color:var(--cream);text-align:right}
+
   .addr{font-family:var(--serif);font-size:26px;color:var(--cream);margin-bottom:6px}
   .city{color:var(--muted);font-size:15px}
   .mapbtn{display:inline-flex;align-items:center;gap:8px;margin-top:26px;
@@ -134,11 +153,32 @@
   </div>
 </section>
 
+<section id="about">
+  <div class="wrap reveal">
+    <p class="kicker">About</p>
+    <p class="lede">An evening of sacred music and drama. Through song and scripture, The End of Time carries the promise of the last days, performed by the choir, soloists, and musicians of the Apostolic Church of Lafayette.</p>
+  </div>
+</section>
+
 <section id="showtimes">
   <div class="wrap reveal">
     <p class="kicker">Showtimes</p>
     <div class="show"><div class="day"><b>Saturday</b> · June 20</div><div class="time">6:30 PM</div></div>
     <div class="show"><div class="day"><b>Sunday</b> · June 21</div><div class="time">5:00 PM</div></div>
+    <a class="mapbtn" id="cal" href="#">Add to calendar</a>
+  </div>
+</section>
+
+<section id="cast">
+  <div class="wrap reveal">
+    <p class="kicker">Cast &amp; musicians</p>
+    <ul class="credits">
+      <li><span class="role">Written by</span><span class="who">Drake Simon</span></li>
+      <li><span class="role">Direction</span><span class="who">Worship arts team</span></li>
+      <li><span class="role">Choir</span><span class="who">The Apostolic Church Choir</span></li>
+      <li><span class="role">Soloists</span><span class="who">Members of the congregation</span></li>
+      <li><span class="role">Musicians</span><span class="who">Live ensemble</span></li>
+    </ul>
   </div>
 </section>
 
@@ -187,6 +227,23 @@
     clabel.textContent='until the curtain rises';
   }
   tick(); setInterval(tick,1000);
+
+  // Add to calendar — an .ics with both performances (times in UTC; CDT is -5)
+  var ICS = [
+    'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//AECL//The End of Time//EN','CALSCALE:GREGORIAN',
+    'BEGIN:VEVENT','UID:eot-20260620@apostoliclafayette','DTSTAMP:20260601T000000Z',
+    'DTSTART:20260620T233000Z','DTEND:20260621T013000Z','SUMMARY:The End of Time',
+    'LOCATION:302 Town Center Pkwy\\, Lafayette\\, LA 70503',
+    'DESCRIPTION:The Apostolic Church of Lafayette presents The End of Time\\, written by Drake Simon.','END:VEVENT',
+    'BEGIN:VEVENT','UID:eot-20260621@apostoliclafayette','DTSTAMP:20260601T000000Z',
+    'DTSTART:20260621T220000Z','DTEND:20260622T000000Z','SUMMARY:The End of Time',
+    'LOCATION:302 Town Center Pkwy\\, Lafayette\\, LA 70503',
+    'DESCRIPTION:The Apostolic Church of Lafayette presents The End of Time\\, written by Drake Simon.','END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n');
+  var cal = document.getElementById('cal');
+  cal.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ICS);
+  cal.setAttribute('download','the-end-of-time.ics');
 </script>
 
 </body>
