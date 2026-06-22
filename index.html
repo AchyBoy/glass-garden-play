@@ -17,22 +17,22 @@
     font:17px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     -webkit-text-size-adjust:100%; -webkit-font-smoothing:antialiased;
   }
-  /* A warm gold glow that illuminates whichever block you're looking at,
-     shimmers softly, and hands off to the next one as you scroll */
-  .lit{position:relative}
-  /* Glow is bound to the block's own box, so its soft edges fall within the
-     divider lines instead of bleeding across them */
-  .lit::before{
-    content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
-    background:radial-gradient(78% 72% at 50% 50%,
-      rgba(255,237,178,.42) 0%,
-      rgba(247,200,112,.24) 40%,
-      rgba(196,135,56,.09) 64%,
-      rgba(20,13,7,0) 82%);
-    opacity:0; transition:opacity .55s ease;
+  /* One soft spotlight that GLIDES between blocks (no flash) and covers the
+     whole block it lands on, lighting the section you're looking at */
+  #spot{
+    position:absolute; left:0; right:0; top:0; height:0; z-index:-1; opacity:0;
+    pointer-events:none;
+    background:radial-gradient(84% 82% at 50% 50%,
+      rgba(255,237,178,.44) 0%,
+      rgba(247,200,112,.25) 44%,
+      rgba(196,135,56,.10) 68%,
+      rgba(20,13,7,0) 86%);
+    transition:top .8s cubic-bezier(.22,.61,.36,1),
+               height .8s cubic-bezier(.22,.61,.36,1),
+               opacity .6s ease;
+    animation:shimmer 4.8s ease-in-out infinite;
   }
-  .lit.active::before{opacity:1; animation:breathe 4.5s ease-in-out infinite}
-  @keyframes breathe{0%,100%{opacity:.8; filter:saturate(1)}50%{opacity:1; filter:saturate(1.12)}}
+  @keyframes shimmer{0%,100%{filter:saturate(1) brightness(1)}50%{filter:saturate(1.16) brightness(1.08)}}
   .lit .serif,.lit .day,.lit .addr,.lit .time,.lit .ft,.lit h1{
     transition:text-shadow .55s ease;
   }
@@ -61,6 +61,13 @@
   section{padding:46px 0;border-bottom:1px solid var(--line);text-align:center}
   .kicker{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
 
+  .clock{font-size:clamp(38px,13vw,60px); line-height:1; color:var(--gold-bright);
+    letter-spacing:.04em; font-variant-numeric:tabular-nums;
+    text-shadow:0 0 26px rgba(233,184,95,.35); transition:color .6s ease}
+  .clock.done{color:#9a8a6b; text-shadow:none}
+  .clabel{margin-top:14px; font-size:14px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)}
+  .clabel.done{color:var(--gold-bright); font-weight:500; letter-spacing:.08em}
+
   .show{padding:18px 0;border-top:1px solid var(--line)}
   .show:first-of-type{border-top:0}
   .show .day{font-size:22px;font-weight:600;color:var(--cream)}
@@ -83,6 +90,7 @@
 <body>
 
 <div class="page">
+  <div id="spot"></div>
   <div class="hero">
     <div class="wrap lit">
       <p class="eyebrow">The Apostolic Church of Lafayette<br>presents</p>
@@ -92,6 +100,12 @@
       <a class="cta" href="#when">View showtimes</a>
     </div>
   </div>
+
+  <section class="wrap lit">
+    <p class="kicker">The curtain falls in</p>
+    <div class="clock serif" id="clock">--:--:--</div>
+    <p class="clabel" id="clabel">counting down</p>
+  </section>
 
   <section id="when" class="wrap">
     <p class="kicker">Showtimes</p>
@@ -120,13 +134,23 @@
 
 <script>
   var targets = Array.prototype.slice.call(document.querySelectorAll('.lit'));
-  var current = null;
-  var ticking = false;
+  var spot = document.getElementById('spot');
+  var page = document.querySelector('.page');
+  var current = null, ticking = false, first = true;
+
+  function moveSpot(el){
+    var r = el.getBoundingClientRect();
+    var pr = page.getBoundingClientRect();
+    if (first){ spot.style.transition = 'none'; }
+    spot.style.top = (r.top - pr.top) + 'px';
+    spot.style.height = r.height + 'px';
+    spot.style.opacity = '1';
+    if (first){ requestAnimationFrame(function(){ spot.style.transition = ''; first = false; }); }
+  }
 
   function update(){
-    // Focus line normally sits mid-screen, but glides toward the bottom as you
-    // run out of scroll — so the last sections each cross it in turn instead of
-    // one getting skipped or pinned.
+    // Focus line sits mid-screen, then glides toward the bottom as you run out
+    // of scroll, so every block gets its turn — none skipped or pinned.
     var H = window.innerHeight;
     var remaining = document.documentElement.scrollHeight - (window.scrollY + H);
     var line = Math.min(H * 0.92, H * 0.5 + Math.max(0, (H * 0.42) - remaining));
@@ -138,14 +162,37 @@
       if (current) current.classList.remove('active');
       best.classList.add('active');
       current = best;
+      moveSpot(best);
     }
     ticking = false;
   }
   function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
 
   window.addEventListener('scroll', onScroll, {passive:true});
-  window.addEventListener('resize', onScroll, {passive:true});
+  window.addEventListener('resize', function(){ if(current) moveSpot(current); onScroll(); }, {passive:true});
   update();
+
+  // Countdown to the final performance (Sun Jun 21, 2026, 5:00 PM Central).
+  // Once it's passed, it locks at 0:00:00 and says "You missed it".
+  var TARGET = new Date('2026-06-21T17:00:00-05:00').getTime();
+  var clock = document.getElementById('clock');
+  var clabel = document.getElementById('clabel');
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+  function tick(){
+    var diff = TARGET - Date.now();
+    if (diff <= 0){
+      clock.textContent = '0:00:00'; clock.classList.add('done');
+      clabel.textContent = 'You missed it'; clabel.classList.add('done');
+      return;
+    }
+    var s = Math.floor(diff / 1000);
+    var d = Math.floor(s / 86400); s -= d * 86400;
+    var h = Math.floor(s / 3600);  s -= h * 3600;
+    var m = Math.floor(s / 60);    s -= m * 60;
+    clock.textContent = (d > 0 ? d + 'd ' : '') + h + ':' + pad(m) + ':' + pad(s);
+    clabel.textContent = 'until the curtain rises';
+  }
+  tick(); setInterval(tick, 1000);
 </script>
 
 </body>
